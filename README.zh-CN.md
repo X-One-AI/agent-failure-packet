@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - v0.2.0 本地 packet builder，支持 runtime fixtures 和输出 profiles。
+`P1` - v0.3.0 本地 packet builder，支持配置和兼容性检查。
 
 ## 目的
 
@@ -32,6 +32,8 @@ agent-failure-packet --version
 从 generic run export 生成 Markdown packet：
 
 ```bash
+agent-failure-packet init --profile issue
+agent-failure-packet validate --input failed-run.json
 agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
 agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
 agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
@@ -40,6 +42,14 @@ agent-failure-packet build --input failed-run.json --redaction-policy .agent-fai
 ```
 
 输入文件使用 `schema_version: agent-failure-packet.run.v1`。JSON 输出使用 `schema_version: agent-failure-packet.packet.v1`。
+
+`agent-failure-packet build` 会从当前目录或上级目录自动发现 `.agent-failure-packet.yml`：
+
+```yaml
+schema_version: 1
+profile: issue
+# redaction_policy: .agent-failure-packet-redaction.yml
+```
 
 Markdown profiles：
 

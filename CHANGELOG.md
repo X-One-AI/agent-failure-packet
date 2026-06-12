@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+
+Configuration and compatibility release.
+
+- Add `agent-failure-packet init` for local project configuration.
+- Add config auto-discovery from `.agent-failure-packet.yml`.
+- Add `agent-failure-packet validate` for run export schema checks.
+- Add Markdown snapshot coverage to detect accidental packet structure drift.
+
 ## 0.2.0
 
 runtime fixture corpus and output profile release.

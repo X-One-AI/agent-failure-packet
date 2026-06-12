@@ -10,7 +10,8 @@ from agent_failure_packet.cli import main
 from agent_failure_packet.renderers import render_markdown
 
 
-FIXTURE = Path("tests/fixtures/runs/generic-failure-v1.json")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+FIXTURE = REPO_ROOT / "tests/fixtures/runs/generic-failure-v1.json"
 SECRET_VALUES = (
     "sk-live-secret-value",
     "Bearer test-secret-token",
@@ -117,6 +118,40 @@ def test_cli_build_supports_output_profiles(tmp_path):
     assert "query-secret-token" not in text
 
 
+def test_cli_init_writes_default_config_and_build_auto_discovers_it(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    input_path = tmp_path / "run.json"
+    input_path.write_text(FIXTURE.read_text(encoding="utf-8"), encoding="utf-8")
+
+    init_exit = main(["init", "--profile", "issue"])
+    output = tmp_path / "packet.md"
+    build_exit = main(["build", "--input", str(input_path), "--output", str(output)])
+
+    config = (tmp_path / ".agent-failure-packet.yml").read_text(encoding="utf-8")
+    text = output.read_text(encoding="utf-8")
+    assert init_exit == 0
+    assert build_exit == 0
+    assert "schema_version: 1" in config
+    assert "profile: issue" in config
+    assert "## Errors" in text
+    assert "## Tool Calls" not in text
+
+
+def test_cli_validate_checks_input_schema_and_outputs_summary(capsys):
+    exit_code = main(["validate", "--input", str(FIXTURE)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert "schema_version=agent-failure-packet.run.v1" in captured.out
+    assert "events=3" in captured.out
+
+
+def test_incident_markdown_snapshot_stays_stable():
+    expected = (REPO_ROOT / "tests/fixtures/snapshots/incident-generic.md").read_text(encoding="utf-8")
+
+    assert render_markdown(build_packet(FIXTURE), profile="incident") == expected
+
+
 def test_cli_build_prints_markdown_to_stdout(capsys):
     exit_code = main(["build", "--input", str(FIXTURE)])
 
@@ -170,4 +205,4 @@ def test_package_module_entrypoint_outputs_version():
         stdout=subprocess.PIPE,
     )
 
-    assert result.stdout.strip() == "agent-failure-packet 0.2.0"
+    assert result.stdout.strip() == "agent-failure-packet 0.3.0"
