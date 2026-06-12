@@ -11,18 +11,21 @@ def test_docs_and_package_metadata_stay_aligned():
     pyproject = Path("pyproject.toml").read_text(encoding="utf-8")
     manifest = Path("MANIFEST.in").read_text(encoding="utf-8")
     changelog = Path("CHANGELOG.md").read_text(encoding="utf-8")
+    action = Path("action.yml").read_text(encoding="utf-8")
 
     assert "agent-failure-packet build" in english
+    assert "GitHub Action" in english
     assert "--profile issue" in english
     assert "agent-failure-packet init" in english
     assert "agent-failure-packet validate" in english
-    assert "v0.3.0" in english
+    assert "v0.4.0" in english
     assert "README.zh-CN.md" in english
     assert "agent-failure-packet build" in chinese
+    assert "GitHub Action" in chinese
     assert "--profile issue" in chinese
     assert "agent-failure-packet init" in chinese
     assert "agent-failure-packet validate" in chinese
-    assert "v0.3.0" in chinese
+    assert "v0.4.0" in chinese
     assert "README.md" in chinese
     assert "agent-failure-packet.run.v1" in design
     assert "agent-failure-packet.packet.v1" in design
@@ -32,9 +35,12 @@ def test_docs_and_package_metadata_stay_aligned():
     assert "fixture corpus evidence" in production
     assert "snapshot coverage" in production
     assert "python3 -m pytest tests -q" in ci
-    assert 'version = "0.3.0"' in pyproject
+    assert "python3 scripts/run-action.py" in action
+    assert 'version = "0.4.0"' in pyproject
     assert "include README.zh-CN.md" in manifest
+    assert "include action.yml" in manifest
+    assert "include scripts/run-action.py" in manifest
     assert "recursive-include tests/fixtures *.json" in manifest
     assert "recursive-include tests/fixtures *.md" in manifest
-    assert "## 0.3.0" in changelog
-    assert "config auto-discovery" in changelog
+    assert "## 0.4.0" in changelog
+    assert "GitHub Action" in changelog

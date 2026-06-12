@@ -4,6 +4,7 @@
 - Do not claim runtime protection, sandboxing, or complete security coverage unless the implementation truly provides it.
 - Redaction is mandatory before sharing evidence, packets, reports, or examples.
 - The first product surface must stay local-first: no uploads, network calls, hosted storage, or PR comments by default.
+- GitHub Action behavior must stay read-only by default: write files, step summary, and outputs, but do not request write permissions or post comments.
 - The default redaction policy may be extended by users but must not be disabled.
 - Packet outputs must include limitations so users do not treat regex redaction as complete security coverage.
 - Runtime-specific adapter work must start from fixture corpus evidence, not from guessed provider behavior.
