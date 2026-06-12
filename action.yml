@@ -1,0 +1,49 @@
+name: Agent Failure Packet
+description: Build a redacted, shareable packet from a failed AI agent run export.
+
+inputs:
+  input:
+    description: Path to an agent-failure-packet.run.v1 JSON export.
+    required: true
+  format:
+    description: Output format.
+    required: false
+    default: markdown
+  profile:
+    description: Markdown output profile.
+    required: false
+    default: incident
+  output:
+    description: Output packet path.
+    required: false
+    default: agent-failure-packet.md
+  redaction-policy:
+    description: Optional YAML redaction policy path.
+    required: false
+    default: ""
+
+outputs:
+  packet-path:
+    description: Path to the generated packet.
+    value: ${{ steps.packet.outputs.packet-path }}
+  summary-json:
+    description: Compact JSON summary for downstream steps.
+    value: ${{ steps.packet.outputs.summary-json }}
+
+runs:
+  using: composite
+  steps:
+    - name: Build agent failure packet
+      id: packet
+      shell: bash
+      run: |
+        policy_args=()
+        if [ -n "${{ inputs.redaction-policy }}" ]; then
+          policy_args=(--redaction-policy "${{ inputs.redaction-policy }}")
+        fi
+        python3 scripts/run-action.py \
+          --input "${{ inputs.input }}" \
+          --format "${{ inputs.format }}" \
+          --profile "${{ inputs.profile }}" \
+          --output "${{ inputs.output }}" \
+          "${policy_args[@]}"

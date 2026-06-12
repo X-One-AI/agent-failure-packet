@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+GitHub Action release.
+
+- Add a read-only composite GitHub Action for building failure packets in CI.
+- Add `scripts/run-action.py` to write packets, step summaries, and downstream outputs.
+- Expose `packet-path` and `summary-json` Action outputs.
+- Keep Action behavior local and non-commenting by default.
+
 ## 0.3.0
 
 Configuration and compatibility release.

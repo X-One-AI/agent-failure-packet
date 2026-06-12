@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - v0.3.0 本地 packet builder，支持配置和兼容性检查。
+`P1` - v0.4.0 本地 packet builder 和 read-only GitHub Action。
 
 ## 目的
 
@@ -72,6 +72,33 @@ regexes:
 ```
 
 默认脱敏策略不能关闭。本工具是 local-first：不会上传 packet 数据，不调用 hosted service，也不会自动发布 comment。
+
+## GitHub Action
+
+在 checkout 之后使用 Action，并指向 agent workflow 生成的 failure export：
+
+```yaml
+name: Agent Failure Packet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  packet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: X-One-AI/agent-failure-packet@v0.4.0
+        with:
+          input: failed-run.json
+          profile: issue
+          output: agent-failure-packet.md
+```
+
+Action 会写出 packet 文件，把紧凑 packet 追加到 `GITHUB_STEP_SUMMARY`，并暴露 `packet-path` 和 `summary-json` outputs。它是 read-only，不会发布 PR comment。
 
 ## 必要证据
 

@@ -3,7 +3,7 @@
 ## Intake
 
 - Priority: P1
-- Status: v0.3.0 local packet builder with config auto-discovery and schema compatibility checks
+- Status: v0.4.0 local packet builder and read-only GitHub Action with schema compatibility checks
 - Positioning: Create redacted, shareable debug packets from failed AI agent runs.
 - Primary route: Product -> Architecture -> Expert/Security -> QA -> Implementation -> Completion readiness
 
@@ -44,6 +44,7 @@ Turn messy failed agent runs into safe evidence for issues, PRs, and incident re
 - Markdown profiles support compact issue sharing and fuller incident review.
 - `agent-failure-packet validate` checks run export schema compatibility before packet generation.
 - `.agent-failure-packet.yml` keeps team defaults out of crowded command lines.
+- GitHub Action produces packet files, step summaries, and downstream outputs without write permissions.
 
 ## Architecture Brief
 
@@ -81,9 +82,10 @@ input evidence -> normalize -> redact -> evaluate -> render reviewable artifact
 4. Prove redaction through positive and negative fixtures before release.
 5. Maintain runtime-shaped fixture corpus entries before adding runtime-specific adapters.
 6. Keep compatibility checks and snapshot tests in CI before each release.
-7. Use feature branches named `feat/<scope>` or `docs/<scope>`.
-8. Use Conventional/Angular commits such as `feat: add packet schema` or `docs: clarify deferred scope`.
-9. Never push directly to `main`; open a pull request from the feature branch.
+7. Keep GitHub Action behavior read-only until real workflows justify comments or uploads.
+8. Use feature branches named `feat/<scope>` or `docs/<scope>`.
+9. Use Conventional/Angular commits such as `feat: add packet schema` or `docs: clarify deferred scope`.
+10. Never push directly to `main`; open a pull request from the feature branch.
 
 ## Skipped Inputs
 

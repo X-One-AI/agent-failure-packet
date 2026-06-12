@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - v0.3.0 local packet builder with config and compatibility checks.
+`P1` - v0.4.0 local packet builder and read-only GitHub Action.
 
 ## Purpose
 
@@ -72,6 +72,33 @@ regexes:
 ```
 
 The default redaction policy cannot be disabled. The tool is local-first: it does not upload packet data, call a hosted service, or post comments.
+
+## GitHub Action
+
+Use the Action after checkout and point it at a failure export produced by your agent workflow:
+
+```yaml
+name: Agent Failure Packet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  packet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: X-One-AI/agent-failure-packet@v0.4.0
+        with:
+          input: failed-run.json
+          profile: issue
+          output: agent-failure-packet.md
+```
+
+The Action writes a packet file, appends a compact packet to `GITHUB_STEP_SUMMARY`, and exposes `packet-path` and `summary-json` outputs. It is read-only and does not post PR comments.
 
 ## Required Evidence
 
