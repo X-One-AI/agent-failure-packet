@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - packet builder design ready for v0.1.0 planning.
+`P1` - v0.1.0 local packet builder.
 
 ## Purpose
 
@@ -17,6 +17,39 @@ Turn messy failed agent runs into safe evidence for issues, PRs, and incident re
 Local packet builder that accepts runtime exports and emits a redacted bundle.
 
 The first executable surface is specified in [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md).
+
+## Install
+
+From this repository:
+
+```bash
+python3 -m pip install -e .
+agent-failure-packet --version
+```
+
+## Usage
+
+Build a Markdown packet from a generic run export:
+
+```bash
+agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
+agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
+agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
+agent-failure-packet build --input failed-run.json --redaction-policy .agent-failure-packet.yml
+```
+
+Input files use `schema_version: agent-failure-packet.run.v1`. JSON outputs use `schema_version: agent-failure-packet.packet.v1`.
+
+Example custom redaction policy:
+
+```yaml
+literals:
+  - internal-customer-id
+regexes:
+  - INTERNAL-[0-9]+
+```
+
+The default redaction policy cannot be disabled. The tool is local-first: it does not upload packet data, call a hosted service, or post comments.
 
 ## Required Evidence
 
@@ -31,6 +64,7 @@ The first executable surface is specified in [Packet Builder Design](./docs/supe
 - not a full tracing platform
 - not a hosted observability backend
 - not raw prompt/log sharing
+- not complete security coverage for every organization-specific secret
 
 ## OPT Operating Model
 
@@ -44,6 +78,7 @@ Inputs that require user or real-world data are recorded in `../x-one-skipped-in
 
 - [Product Foundation](./docs/product-foundation.md)
 - [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
+- [Changelog](./CHANGELOG.md)
 - [OPT Overlay](./ops/opt-overlay.md)
 - [Production Constraints](./ops/constraints/production.md)
 - [Main Entry Constraints](./ops/constraints/main-entry.md)
