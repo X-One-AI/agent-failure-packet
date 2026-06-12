@@ -3,7 +3,7 @@
 ## Intake
 
 - Priority: P1
-- Status: packet builder design ready for v0.1.0 planning
+- Status: v0.1.0 local packet builder in implementation
 - Positioning: Create redacted, shareable debug packets from failed AI agent runs.
 - Primary route: Product -> Architecture -> Expert/Security -> QA -> Implementation -> Completion readiness
 
@@ -40,6 +40,7 @@ Turn messy failed agent runs into safe evidence for issues, PRs, and incident re
 - Reports, packets, indexes, or labs must be redaction-safe by design.
 - Every risky claim links to evidence, rule logic, or an explicit limitation.
 - The first packet builder design is documented in `docs/superpowers/specs/2026-06-13-packet-builder-design.md`.
+- `agent-failure-packet build` produces redacted Markdown and JSON packets from `agent-failure-packet.run.v1` inputs.
 
 ## Architecture Brief
 
@@ -60,6 +61,7 @@ input evidence -> normalize -> redact -> evaluate -> render reviewable artifact
 - Overclaiming safety guarantees.
 - Creating generic tooling that weakens the Agentic DevSecOps signal.
 - Accepting real secrets or private user data into fixtures.
+- Allowing packet output to leak raw secrets because redaction was applied after rendering.
 
 ## QA Plan
 

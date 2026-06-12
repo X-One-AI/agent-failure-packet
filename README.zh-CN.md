@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - packet builder 设计已准备进入 v0.1.0 规划。
+`P1` - v0.1.0 本地 packet builder。
 
 ## 目的
 
@@ -17,6 +17,39 @@
 本地 packet builder：接受 agent runtime export，并输出脱敏后的可分享 bundle。
 
 第一可执行表面已在 [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md) 中定义。
+
+## 安装
+
+在本仓库中运行：
+
+```bash
+python3 -m pip install -e .
+agent-failure-packet --version
+```
+
+## 使用
+
+从 generic run export 生成 Markdown packet：
+
+```bash
+agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
+agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
+agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
+agent-failure-packet build --input failed-run.json --redaction-policy .agent-failure-packet.yml
+```
+
+输入文件使用 `schema_version: agent-failure-packet.run.v1`。JSON 输出使用 `schema_version: agent-failure-packet.packet.v1`。
+
+自定义脱敏策略示例：
+
+```yaml
+literals:
+  - internal-customer-id
+regexes:
+  - INTERNAL-[0-9]+
+```
+
+默认脱敏策略不能关闭。本工具是 local-first：不会上传 packet 数据，不调用 hosted service，也不会自动发布 comment。
 
 ## 必要证据
 
@@ -31,6 +64,7 @@
 - 不做完整 tracing 平台
 - 不做 hosted observability backend
 - 不分享原始 prompt 或 log
+- 不承诺覆盖所有组织特有 secret 的完整安全能力
 
 ## OPT 运行模型
 
@@ -44,6 +78,7 @@
 
 - [产品基础](./docs/product-foundation.md)
 - [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
+- [Changelog](./CHANGELOG.md)
 - [OPT Overlay](./ops/opt-overlay.md)
 - [生产约束](./ops/constraints/production.md)
 - [主入口约束](./ops/constraints/main-entry.md)

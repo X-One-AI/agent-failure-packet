@@ -1,0 +1,45 @@
+{
+  "schema_version": "agent-failure-packet.run.v1",
+  "run": {
+    "id": "run_123",
+    "started_at": "2026-06-13T00:00:00Z",
+    "ended_at": "2026-06-13T00:03:00Z",
+    "status": "failed",
+    "agent": "codex"
+  },
+  "environment": {
+    "os": "macOS",
+    "runtime": "python3.12",
+    "repo": "X-One-AI/example",
+    "branch": "feat/example"
+  },
+  "events": [
+    {
+      "timestamp": "2026-06-13T00:00:15Z",
+      "kind": "message",
+      "message": "Started task with API_KEY=sk-live-secret-value"
+    },
+    {
+      "timestamp": "2026-06-13T00:01:00Z",
+      "kind": "tool_call",
+      "message": "Running tests",
+      "tool_call": {
+        "name": "shell",
+        "arguments": {
+          "cmd": "pytest tests",
+          "authorization": "Bearer test-secret-token"
+        },
+        "exit_code": 1
+      }
+    },
+    {
+      "timestamp": "2026-06-13T00:02:30Z",
+      "kind": "error",
+      "message": "Tests failed while calling https://user:pass@example.test/path",
+      "error": {
+        "type": "CommandError",
+        "message": "2 failed, password=hunter2"
+      }
+    }
+  ]
+}
