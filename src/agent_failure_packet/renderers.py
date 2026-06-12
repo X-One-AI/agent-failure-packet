@@ -8,7 +8,9 @@ def render_json(packet: dict[str, Any]) -> str:
     return json.dumps(packet, indent=2, sort_keys=True) + "\n"
 
 
-def render_markdown(packet: dict[str, Any]) -> str:
+def render_markdown(packet: dict[str, Any], profile: str = "incident") -> str:
+    if profile not in {"incident", "issue"}:
+        raise ValueError(f"Unsupported profile: {profile}")
     summary = packet["summary"]
     lines = [
         "# Agent Failure Packet",
@@ -27,21 +29,25 @@ def render_markdown(packet: dict[str, Any]) -> str:
     ]
     for event in packet["timeline"]:
         lines.append(f"- `{event.get('timestamp') or 'unknown'}` `{event['kind']}`: {event['message']}")
-    lines.extend(["", "## Tool Calls", ""])
-    if packet["tool_calls"]:
-        for call in packet["tool_calls"]:
-            lines.append(f"- `{call.get('timestamp') or 'unknown'}` `{call['name']}` exit `{call.get('exit_code')}`: {call['message']}")
-    else:
-        lines.append("- None recorded.")
+    if profile == "incident":
+        lines.extend(["", "## Tool Calls", ""])
+        if packet["tool_calls"]:
+            for call in packet["tool_calls"]:
+                lines.append(
+                    f"- `{call.get('timestamp') or 'unknown'}` `{call['name']}` exit `{call.get('exit_code')}`: {call['message']}"
+                )
+        else:
+            lines.append("- None recorded.")
     lines.extend(["", "## Errors", ""])
     if packet["errors"]:
         for error in packet["errors"]:
             lines.append(f"- `{error.get('timestamp') or 'unknown'}` `{error['type']}`: {error['message']}")
     else:
         lines.append("- None recorded.")
-    lines.extend(["", "## Environment Summary", ""])
-    for key, value in sorted(packet["environment"].items()):
-        lines.append(f"- {key}: `{value}`")
+    if profile == "incident":
+        lines.extend(["", "## Environment Summary", ""])
+        for key, value in sorted(packet["environment"].items()):
+            lines.append(f"- {key}: `{value}`")
     lines.extend(
         [
             "",

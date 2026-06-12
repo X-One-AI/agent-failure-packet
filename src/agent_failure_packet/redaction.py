@@ -13,6 +13,7 @@ _DEFAULT_PATTERNS = (
     re.compile(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+"),
     re.compile(r"sk-[A-Za-z0-9_-]{8,}"),
     re.compile(r"(?i)(https?://)[^/\s:@]+:[^/\s@]+@"),
+    re.compile(r"(?i)([?&](?:token|api[_-]?key|secret|password)=)[^&#\s]+"),
 )
 
 _PLACEHOLDERS = {
@@ -84,7 +85,10 @@ def _redact_string(value: str, literals: tuple[str, ...], regexes: tuple[re.Patt
 
     text = _DEFAULT_PATTERNS[0].sub(replace_assignment, text)
     for pattern in _DEFAULT_PATTERNS[1:]:
-        text, additions = pattern.subn("[REDACTED:secret]", text)
+        if pattern.pattern.startswith("(?i)([?&]"):
+            text, additions = pattern.subn(r"\1[REDACTED:secret]", text)
+        else:
+            text, additions = pattern.subn("[REDACTED:secret]", text)
         count += additions
     for literal in literals:
         if literal in text:

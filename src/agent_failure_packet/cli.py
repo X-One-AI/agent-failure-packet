@@ -17,6 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     build = subparsers.add_parser("build", help="build a redacted failure packet")
     build.add_argument("--input", required=True, help="path to agent-failure-packet.run.v1 JSON")
     build.add_argument("--format", choices=("markdown", "json"), default="markdown")
+    build.add_argument("--profile", choices=("incident", "issue"), default="incident", help="Markdown output profile")
     build.add_argument("--output", help="output path; defaults to stdout")
     build.add_argument("--redaction-policy", help="optional YAML file with literals and regexes")
 
@@ -34,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
         print(str(exc), file=sys.stderr)
         return 2
 
-    output = render_json(packet) if args.format == "json" else render_markdown(packet)
+    output = render_json(packet) if args.format == "json" else render_markdown(packet, profile=args.profile)
     if args.output:
         Path(args.output).write_text(output, encoding="utf-8")
     else:

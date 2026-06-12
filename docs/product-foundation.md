@@ -3,7 +3,7 @@
 ## Intake
 
 - Priority: P1
-- Status: v0.1.0 local packet builder in implementation
+- Status: v0.2.0 local packet builder with runtime fixtures and output profiles
 - Positioning: Create redacted, shareable debug packets from failed AI agent runs.
 - Primary route: Product -> Architecture -> Expert/Security -> QA -> Implementation -> Completion readiness
 
@@ -41,6 +41,7 @@ Turn messy failed agent runs into safe evidence for issues, PRs, and incident re
 - Every risky claim links to evidence, rule logic, or an explicit limitation.
 - The first packet builder design is documented in `docs/superpowers/specs/2026-06-13-packet-builder-design.md`.
 - `agent-failure-packet build` produces redacted Markdown and JSON packets from `agent-failure-packet.run.v1` inputs.
+- Markdown profiles support compact issue sharing and fuller incident review.
 
 ## Architecture Brief
 
@@ -76,9 +77,10 @@ input evidence -> normalize -> redact -> evaluate -> render reviewable artifact
 2. Use the generic `agent-failure-packet.run.v1` JSON input contract until real runtime exports justify adapters.
 3. Build Markdown and JSON packet outputs before any hosted or comment-posting workflow.
 4. Prove redaction through positive and negative fixtures before release.
-5. Use feature branches named `feat/<scope>` or `docs/<scope>`.
-6. Use Conventional/Angular commits such as `feat: add packet schema` or `docs: clarify deferred scope`.
-7. Never push directly to `main`; open a pull request from the feature branch.
+5. Maintain runtime-shaped fixture corpus entries before adding runtime-specific adapters.
+6. Use feature branches named `feat/<scope>` or `docs/<scope>`.
+7. Use Conventional/Angular commits such as `feat: add packet schema` or `docs: clarify deferred scope`.
+8. Never push directly to `main`; open a pull request from the feature branch.
 
 ## Skipped Inputs
 

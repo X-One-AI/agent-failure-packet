@@ -31,7 +31,7 @@ jobs:
           test -f ops/skills/evolution.md
           grep -q "README.zh-CN.md" README.md
           grep -q "README.md" README.zh-CN.md
-          grep -q "v0.1.0 local packet builder" README.md
+          grep -q "v0.2.0 local packet builder" README.md
           grep -q "Packet Builder Design" README.zh-CN.md
           grep -q "agent-failure-packet build" README.md
           grep -q "agent-failure-packet.run.v1" docs/superpowers/specs/2026-06-13-packet-builder-design.md
@@ -51,4 +51,5 @@ jobs:
         run: |
           agent-failure-packet --version
           agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json --format json --output /tmp/failure-packet.json
+          agent-failure-packet build --input tests/fixtures/runs/codex-cli-failure-v1.json --profile issue --output /tmp/issue-packet.md
           grep -q "agent-failure-packet.packet.v1" /tmp/failure-packet.json

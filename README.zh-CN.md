@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - v0.1.0 本地 packet builder。
+`P1` - v0.2.0 本地 packet builder，支持 runtime fixtures 和输出 profiles。
 
 ## 目的
 
@@ -35,10 +35,22 @@ agent-failure-packet --version
 agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
 agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
 agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
+agent-failure-packet build --input failed-run.json --profile issue --output issue-packet.md
 agent-failure-packet build --input failed-run.json --redaction-policy .agent-failure-packet.yml
 ```
 
 输入文件使用 `schema_version: agent-failure-packet.run.v1`。JSON 输出使用 `schema_version: agent-failure-packet.packet.v1`。
+
+Markdown profiles：
+
+- `incident`：完整 packet，包含时间线、工具调用、错误、环境、脱敏摘要、checklist 和限制说明。
+- `issue`：适合 GitHub issue 或 support ticket 的紧凑 packet；省略更深的工具调用和环境章节。
+
+Fixture corpus：
+
+- `generic-failure-v1.json`
+- `codex-cli-failure-v1.json`
+- `github-copilot-agent-failure-v1.json`
 
 自定义脱敏策略示例：
 

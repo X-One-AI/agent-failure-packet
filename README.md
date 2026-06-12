@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - v0.1.0 local packet builder.
+`P1` - v0.2.0 local packet builder with runtime fixtures and output profiles.
 
 ## Purpose
 
@@ -35,10 +35,22 @@ Build a Markdown packet from a generic run export:
 agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
 agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
 agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
+agent-failure-packet build --input failed-run.json --profile issue --output issue-packet.md
 agent-failure-packet build --input failed-run.json --redaction-policy .agent-failure-packet.yml
 ```
 
 Input files use `schema_version: agent-failure-packet.run.v1`. JSON outputs use `schema_version: agent-failure-packet.packet.v1`.
+
+Markdown profiles:
+
+- `incident`: full packet with timeline, tool calls, errors, environment, redaction summary, checklist, and limitations.
+- `issue`: compact packet for GitHub issues or support tickets; omits deeper tool-call and environment sections.
+
+Fixture corpus:
+
+- `generic-failure-v1.json`
+- `codex-cli-failure-v1.json`
+- `github-copilot-agent-failure-v1.json`
 
 Example custom redaction policy:
 
