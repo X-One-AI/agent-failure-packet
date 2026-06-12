@@ -1,0 +1,45 @@
+{
+  "schema_version": "agent-failure-packet.run.v1",
+  "run": {
+    "id": "codex_run_456",
+    "started_at": "2026-06-13T01:00:00Z",
+    "ended_at": "2026-06-13T01:04:30Z",
+    "status": "failed",
+    "agent": "codex-cli"
+  },
+  "environment": {
+    "os": "Ubuntu",
+    "runtime": "node20",
+    "repo": "X-One-AI/example",
+    "branch": "feat/agent-change"
+  },
+  "events": [
+    {
+      "timestamp": "2026-06-13T01:00:20Z",
+      "kind": "message",
+      "message": "Using placeholder OPENAI_API_KEY=<your-api-key> in docs"
+    },
+    {
+      "timestamp": "2026-06-13T01:01:15Z",
+      "kind": "tool_call",
+      "message": "Calling MCP filesystem tool",
+      "tool_call": {
+        "name": "mcp.filesystem.read",
+        "arguments": {
+          "path": "/tmp/project/.env",
+          "url": "https://api.example.test/logs?token=query-secret-token"
+        },
+        "exit_code": 0
+      }
+    },
+    {
+      "timestamp": "2026-06-13T01:03:00Z",
+      "kind": "error",
+      "message": "Run failed after tool returned Authorization: Bearer codex-secret-token",
+      "error": {
+        "type": "ToolOutputError",
+        "message": "Unexpected private file contents"
+      }
+    }
+  ]
+}

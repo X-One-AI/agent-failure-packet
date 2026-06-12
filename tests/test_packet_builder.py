@@ -54,6 +54,34 @@ def test_render_markdown_contains_reviewable_sections_without_secrets():
         assert secret not in markdown
 
 
+def test_issue_profile_is_compact_and_incident_profile_keeps_deeper_sections():
+    packet = build_packet(Path("tests/fixtures/runs/codex-cli-failure-v1.json"))
+
+    issue_markdown = render_markdown(packet, profile="issue")
+    incident_markdown = render_markdown(packet, profile="incident")
+
+    assert "## Tool Calls" not in issue_markdown
+    assert "## Errors" in issue_markdown
+    assert "## Tool Calls" in incident_markdown
+    assert "## Environment Summary" in incident_markdown
+    assert "query-secret-token" not in incident_markdown
+    assert "Bearer codex-secret-token" not in incident_markdown
+    assert "<your-api-key>" in incident_markdown
+
+
+def test_runtime_fixture_corpus_documents_supported_real_world_shapes():
+    fixture_dir = Path("tests/fixtures/runs")
+    fixture_names = {path.name for path in fixture_dir.glob("*.json")}
+
+    assert "generic-failure-v1.json" in fixture_names
+    assert "codex-cli-failure-v1.json" in fixture_names
+    assert "github-copilot-agent-failure-v1.json" in fixture_names
+    for fixture in fixture_dir.glob("*.json"):
+        packet = build_packet(fixture)
+        assert packet["schema_version"] == "agent-failure-packet.packet.v1"
+        assert packet["timeline"], fixture.name
+
+
 def test_cli_build_writes_json_and_markdown(tmp_path):
     json_output = tmp_path / "packet.json"
     markdown_output = tmp_path / "packet.md"
@@ -65,6 +93,28 @@ def test_cli_build_writes_json_and_markdown(tmp_path):
     assert markdown_exit == 0
     assert json.loads(json_output.read_text(encoding="utf-8"))["schema_version"] == "agent-failure-packet.packet.v1"
     assert "# Agent Failure Packet" in markdown_output.read_text(encoding="utf-8")
+
+
+def test_cli_build_supports_output_profiles(tmp_path):
+    output = tmp_path / "issue.md"
+
+    exit_code = main(
+        [
+            "build",
+            "--input",
+            "tests/fixtures/runs/codex-cli-failure-v1.json",
+            "--profile",
+            "issue",
+            "--output",
+            str(output),
+        ]
+    )
+
+    text = output.read_text(encoding="utf-8")
+    assert exit_code == 0
+    assert "## Errors" in text
+    assert "## Tool Calls" not in text
+    assert "query-secret-token" not in text
 
 
 def test_cli_build_prints_markdown_to_stdout(capsys):
@@ -120,4 +170,4 @@ def test_package_module_entrypoint_outputs_version():
         stdout=subprocess.PIPE,
     )
 
-    assert result.stdout.strip() == "agent-failure-packet 0.1.0"
+    assert result.stdout.strip() == "agent-failure-packet 0.2.0"
