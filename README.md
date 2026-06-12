@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - v0.2.0 local packet builder with runtime fixtures and output profiles.
+`P1` - v0.3.0 local packet builder with config and compatibility checks.
 
 ## Purpose
 
@@ -32,6 +32,8 @@ agent-failure-packet --version
 Build a Markdown packet from a generic run export:
 
 ```bash
+agent-failure-packet init --profile issue
+agent-failure-packet validate --input failed-run.json
 agent-failure-packet build --input tests/fixtures/runs/generic-failure-v1.json
 agent-failure-packet build --input failed-run.json --format markdown --output failure-packet.md
 agent-failure-packet build --input failed-run.json --format json --output failure-packet.json
@@ -40,6 +42,14 @@ agent-failure-packet build --input failed-run.json --redaction-policy .agent-fai
 ```
 
 Input files use `schema_version: agent-failure-packet.run.v1`. JSON outputs use `schema_version: agent-failure-packet.packet.v1`.
+
+`agent-failure-packet build` auto-discovers `.agent-failure-packet.yml` from the current directory or its parents:
+
+```yaml
+schema_version: 1
+profile: issue
+# redaction_policy: .agent-failure-packet-redaction.yml
+```
 
 Markdown profiles:
 
