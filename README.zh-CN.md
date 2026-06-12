@@ -6,29 +6,31 @@
 
 ## 状态
 
-`P1` - reserved production foundation。
+`P1` - packet builder 设计已准备进入 v0.1.0 规划。
 
 ## 目的
 
-Turn messy failed agent runs into safe evidence for issues, PRs, and incident review.
+把混乱的失败 agent run 转成适合 issue、PR 和 incident review 使用的安全证据。
 
 ## 第一生产化表面
 
-Local packet builder that accepts runtime exports and emits a redacted bundle.
+本地 packet builder：接受 agent runtime export，并输出脱敏后的可分享 bundle。
+
+第一可执行表面已在 [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md) 中定义。
 
 ## 必要证据
 
-- timeline
-- tool calls
-- errors
-- redaction summary
-- environment summary
+- 时间线
+- 工具调用
+- 错误
+- 脱敏摘要
+- 环境摘要
 
 ## 非目标
 
-- not a full tracing platform
-- not a hosted observability backend
-- not raw prompt/log sharing
+- 不做完整 tracing 平台
+- 不做 hosted observability backend
+- 不分享原始 prompt 或 log
 
 ## OPT 运行模型
 
@@ -41,6 +43,7 @@ Local packet builder that accepts runtime exports and emits a redacted bundle.
 ## 文档
 
 - [产品基础](./docs/product-foundation.md)
+- [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
 - [OPT Overlay](./ops/opt-overlay.md)
 - [生产约束](./ops/constraints/production.md)
 - [主入口约束](./ops/constraints/main-entry.md)

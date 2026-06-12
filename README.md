@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - reserved production foundation.
+`P1` - packet builder design ready for v0.1.0 planning.
 
 ## Purpose
 
@@ -15,6 +15,8 @@ Turn messy failed agent runs into safe evidence for issues, PRs, and incident re
 ## First Production Surface
 
 Local packet builder that accepts runtime exports and emits a redacted bundle.
+
+The first executable surface is specified in [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md).
 
 ## Required Evidence
 
@@ -41,6 +43,7 @@ Inputs that require user or real-world data are recorded in `../x-one-skipped-in
 ## Docs
 
 - [Product Foundation](./docs/product-foundation.md)
+- [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
 - [OPT Overlay](./ops/opt-overlay.md)
 - [Production Constraints](./ops/constraints/production.md)
 - [Main Entry Constraints](./ops/constraints/main-entry.md)
