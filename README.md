@@ -20,14 +20,14 @@ The first executable surface is specified in [Packet Builder Design](./docs/supe
 
 ## Install
 
-From PyPI after publication:
+From PyPI:
 
 ```bash
 python3 -m pip install xone-agent-failure-packet
 agent-failure-packet --version
 ```
 
-From Homebrew after tap update:
+From Homebrew:
 
 ```bash
 brew install x-one-ai/tap/agent-failure-packet
@@ -136,6 +136,8 @@ This project references the shared One Person Team workflow through [ops/opt-ove
 ## Blocked Inputs
 
 Inputs that require user or real-world data are recorded in `../x-one-skipped-inputs.md` and should not block foundation work.
+
+Real-user feedback should be classified as false-positive, false-negative, adapter-request, scenario-request, or catalog-update when it applies; portfolio-level handling is tracked in X-One portfolio health docs.
 
 ## Docs
 
