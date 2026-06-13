@@ -18,14 +18,14 @@ def test_docs_and_package_metadata_stay_aligned():
     assert "--profile issue" in english
     assert "agent-failure-packet init" in english
     assert "agent-failure-packet validate" in english
-    assert "v0.4.0" in english
+    assert "v0.4.1" in english
     assert "README.zh-CN.md" in english
     assert "agent-failure-packet build" in chinese
     assert "GitHub Action" in chinese
     assert "--profile issue" in chinese
     assert "agent-failure-packet init" in chinese
     assert "agent-failure-packet validate" in chinese
-    assert "v0.4.0" in chinese
+    assert "v0.4.1" in chinese
     assert "README.md" in chinese
     assert "agent-failure-packet.run.v1" in design
     assert "agent-failure-packet.packet.v1" in design
@@ -36,11 +36,11 @@ def test_docs_and_package_metadata_stay_aligned():
     assert "snapshot coverage" in production
     assert "python3 -m pytest tests -q" in ci
     assert "python3 scripts/run-action.py" in action
-    assert 'version = "0.4.0"' in pyproject
+    assert 'version = "0.4.1"' in pyproject
     assert "include README.zh-CN.md" in manifest
     assert "include action.yml" in manifest
     assert "include scripts/run-action.py" in manifest
     assert "recursive-include tests/fixtures *.json" in manifest
     assert "recursive-include tests/fixtures *.md" in manifest
-    assert "## 0.4.0" in changelog
+    assert "## 0.4.1" in changelog
     assert "GitHub Action" in changelog

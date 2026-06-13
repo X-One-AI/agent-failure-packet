@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+Distribution release.
+
+- Add package publishing workflow and distribution documentation.
+- Prepare a release tag that includes the PyPI/TestPyPI publishing workflow.
+
 ## 0.4.0
 
 GitHub Action release.

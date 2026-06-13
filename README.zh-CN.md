@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - v0.4.0 本地 packet builder 和 read-only GitHub Action。
+`P1` - v0.4.1 本地 packet builder 和 read-only GitHub Action。
 
 ## 目的
 
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: X-One-AI/agent-failure-packet@v0.4.0
+      - uses: X-One-AI/agent-failure-packet@v0.4.1
         with:
           input: failed-run.json
           profile: issue
