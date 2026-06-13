@@ -20,14 +20,14 @@
 
 ## 安装
 
-PyPI 发布后安装：
+从 PyPI 安装：
 
 ```bash
 python3 -m pip install xone-agent-failure-packet
 agent-failure-packet --version
 ```
 
-Homebrew tap 更新后安装：
+从 Homebrew 安装：
 
 ```bash
 brew install x-one-ai/tap/agent-failure-packet
@@ -136,6 +136,8 @@ Action 会写出 packet 文件，把紧凑 packet 追加到 `GITHUB_STEP_SUMMARY
 ## 暂缺输入
 
 需要用户或真实世界数据补充的内容记录在 `../x-one-skipped-inputs.md`，不阻塞基础建设。
+
+真实用户反馈适用时应分类为 false-positive、false-negative、adapter-request、scenario-request 或 catalog-update；portfolio 级处理由 X-One portfolio health docs 跟踪。
 
 ## 文档
 
