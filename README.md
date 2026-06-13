@@ -20,6 +20,20 @@ The first executable surface is specified in [Packet Builder Design](./docs/supe
 
 ## Install
 
+From PyPI after publication:
+
+```bash
+python3 -m pip install xone-agent-failure-packet
+agent-failure-packet --version
+```
+
+From Homebrew after tap update:
+
+```bash
+brew install x-one-ai/tap/agent-failure-packet
+agent-failure-packet --version
+```
+
 From this repository:
 
 ```bash
@@ -128,6 +142,8 @@ Inputs that require user or real-world data are recorded in `../x-one-skipped-in
 - [Product Foundation](./docs/product-foundation.md)
 - [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
 - [Changelog](./CHANGELOG.md)
+- [Publishing](./docs/publishing.md)
+- [Homebrew Packaging](./docs/homebrew.md)
 - [OPT Overlay](./ops/opt-overlay.md)
 - [Production Constraints](./ops/constraints/production.md)
 - [Main Entry Constraints](./ops/constraints/main-entry.md)
