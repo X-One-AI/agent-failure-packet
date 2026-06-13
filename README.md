@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - v0.4.0 local packet builder and read-only GitHub Action.
+`P1` - v0.4.1 local packet builder and read-only GitHub Action.
 
 ## Purpose
 
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: X-One-AI/agent-failure-packet@v0.4.0
+      - uses: X-One-AI/agent-failure-packet@v0.4.1
         with:
           input: failed-run.json
           profile: issue

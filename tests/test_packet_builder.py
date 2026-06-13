@@ -205,4 +205,4 @@ def test_package_module_entrypoint_outputs_version():
         stdout=subprocess.PIPE,
     )
 
-    assert result.stdout.strip() == "agent-failure-packet 0.4.0"
+    assert result.stdout.strip() == "agent-failure-packet 0.4.1"

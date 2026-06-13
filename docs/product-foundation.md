@@ -3,7 +3,7 @@
 ## Intake
 
 - Priority: P1
-- Status: v0.4.0 local packet builder and read-only GitHub Action with schema compatibility checks
+- Status: v0.4.1 local packet builder and read-only GitHub Action with schema compatibility checks
 - Positioning: Create redacted, shareable debug packets from failed AI agent runs.
 - Primary route: Product -> Architecture -> Expert/Security -> QA -> Implementation -> Completion readiness
 

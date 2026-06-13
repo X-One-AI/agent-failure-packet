@@ -31,7 +31,7 @@ jobs:
           test -f ops/skills/evolution.md
           grep -q "README.zh-CN.md" README.md
           grep -q "README.md" README.zh-CN.md
-          grep -q "v0.4.0 local packet builder" README.md
+          grep -q "local packet builder" README.md
           grep -q "Packet Builder Design" README.zh-CN.md
           grep -q "agent-failure-packet build" README.md
           grep -q "agent-failure-packet.run.v1" docs/superpowers/specs/2026-06-13-packet-builder-design.md

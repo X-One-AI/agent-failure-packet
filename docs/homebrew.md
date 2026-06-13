@@ -33,5 +33,5 @@ Formula/agent-failure-packet.rb
 ## Current Target
 
 ```text
-xone-agent-failure-packet==0.4.0
+xone-agent-failure-packet==0.4.1
 ```
