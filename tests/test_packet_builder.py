@@ -40,6 +40,31 @@ def test_build_packet_normalizes_failed_run_and_redacts_sensitive_values():
         assert secret not in serialized
 
 
+def test_build_packet_preserves_redacted_pr_evidence_handoff_context(tmp_path: Path):
+    input_path = tmp_path / "pr-handoff-run.json"
+    data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    data["handoff"] = {
+        "source_tool": "agent-pr-evidence",
+        "decision": "create-failure-packet",
+        "evidence_source": "test-log",
+        "source_report": "agent-pr-evidence.md",
+        "reason": "Test log failed with token=handoff-secret-value",
+    }
+    input_path.write_text(json.dumps(data), encoding="utf-8")
+
+    packet = build_packet(input_path)
+    markdown = render_markdown(packet, profile="issue")
+
+    assert packet["handoff"]["source_tool"] == "agent-pr-evidence"
+    assert packet["handoff"]["decision"] == "create-failure-packet"
+    assert packet["handoff"]["source_report"] == "agent-pr-evidence.md"
+    assert "handoff-secret-value" not in json.dumps(packet, sort_keys=True)
+    assert "## Handoff Context" in markdown
+    assert "agent-pr-evidence" in markdown
+    assert "create-failure-packet" in markdown
+    assert "handoff-secret-value" not in markdown
+
+
 def test_render_markdown_contains_reviewable_sections_without_secrets():
     markdown = render_markdown(build_packet(FIXTURE))
 
@@ -77,6 +102,7 @@ def test_runtime_fixture_corpus_documents_supported_real_world_shapes():
     assert "generic-failure-v1.json" in fixture_names
     assert "codex-cli-failure-v1.json" in fixture_names
     assert "github-copilot-agent-failure-v1.json" in fixture_names
+    assert "agent-pr-evidence-handoff-failure-v1.json" in fixture_names
     for fixture in fixture_dir.glob("*.json"):
         packet = build_packet(fixture)
         assert packet["schema_version"] == "agent-failure-packet.packet.v1"
@@ -205,4 +231,4 @@ def test_package_module_entrypoint_outputs_version():
         stdout=subprocess.PIPE,
     )
 
-    assert result.stdout.strip() == "agent-failure-packet 0.4.1"
+    assert result.stdout.strip() == "agent-failure-packet 0.4.2"

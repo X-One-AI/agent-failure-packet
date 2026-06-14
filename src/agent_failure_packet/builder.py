@@ -29,6 +29,7 @@ def build_packet(input_path: Path, policy_path: Path | None = None) -> dict[str,
         "tool_calls": [_tool_call(event) for event in events if event.get("tool_call")],
         "errors": [_error(event) for event in events if event.get("error") or event.get("kind") == "error"],
         "environment": data["environment"],
+        "handoff": _handoff_context(data.get("handoff")),
         "redactions": {"count": 0, "policy": "default+custom" if policy_path else "default"},
         "limitations": [
             "Regex redaction reduces accidental exposure but is not complete security coverage.",
@@ -68,4 +69,16 @@ def _error(event: dict[str, Any]) -> dict[str, Any]:
         "type": error.get("type", "Error"),
         "message": error.get("message", event.get("message", "")),
         "event_message": event.get("message", ""),
+    }
+
+
+def _handoff_context(handoff: Any) -> dict[str, Any] | None:
+    if not isinstance(handoff, dict):
+        return None
+    return {
+        "source_tool": handoff.get("source_tool", "unknown"),
+        "decision": handoff.get("decision", "unknown"),
+        "evidence_source": handoff.get("evidence_source", "unknown"),
+        "source_report": handoff.get("source_report"),
+        "reason": handoff.get("reason", ""),
     }

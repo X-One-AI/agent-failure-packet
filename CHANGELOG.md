@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.2
+
+Production handoff release.
+
+- Preserve optional `agent-pr-evidence` handoff context in packets after redaction.
+- Render `Handoff Context` in Markdown profiles so issues, support tickets, and incident reviews can trace why a packet was created.
+- Add an `agent-pr-evidence-handoff-failure-v1.json` runtime-shaped fixture.
+
 ## 0.4.1
 
 Distribution release.

@@ -29,6 +29,20 @@ def render_markdown(packet: dict[str, Any], profile: str = "incident") -> str:
     ]
     for event in packet["timeline"]:
         lines.append(f"- `{event.get('timestamp') or 'unknown'}` `{event['kind']}`: {event['message']}")
+    if packet.get("handoff"):
+        handoff = packet["handoff"]
+        lines.extend(
+            [
+                "",
+                "## Handoff Context",
+                "",
+                f"- Source tool: `{handoff['source_tool']}`",
+                f"- Decision: `{handoff['decision']}`",
+                f"- Evidence source: `{handoff['evidence_source']}`",
+                f"- Source report: `{handoff.get('source_report') or 'not provided'}`",
+                f"- Reason: {handoff.get('reason') or 'not provided'}",
+            ]
+        )
     if profile == "incident":
         lines.extend(["", "## Tool Calls", ""])
         if packet["tool_calls"]:

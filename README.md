@@ -6,7 +6,7 @@ Create redacted, shareable debug packets from failed AI agent runs.
 
 ## Status
 
-`P1` - v0.4.1 local packet builder and read-only GitHub Action.
+`P1` - v0.4.2 local packet builder and read-only GitHub Action.
 
 ## Purpose
 
@@ -57,6 +57,8 @@ agent-failure-packet build --input failed-run.json --redaction-policy .agent-fai
 
 Input files use `schema_version: agent-failure-packet.run.v1`. JSON outputs use `schema_version: agent-failure-packet.packet.v1`.
 
+Run exports may include optional `handoff` context from `agent-pr-evidence` when a PR evidence report requests `create-failure-packet`. The packet preserves this context after redaction and renders it as `Handoff Context` so issue/support/incident readers can trace why the packet was created.
+
 `agent-failure-packet build` auto-discovers `.agent-failure-packet.yml` from the current directory or its parents:
 
 ```yaml
@@ -75,6 +77,7 @@ Fixture corpus:
 - `generic-failure-v1.json`
 - `codex-cli-failure-v1.json`
 - `github-copilot-agent-failure-v1.json`
+- `agent-pr-evidence-handoff-failure-v1.json`
 
 Example custom redaction policy:
 
@@ -105,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: X-One-AI/agent-failure-packet@v0.4.1
+      - uses: X-One-AI/agent-failure-packet@v0.4.2
         with:
           input: failed-run.json
           profile: issue
