@@ -54,3 +54,14 @@ def test_issue_handoff_workflow_document_is_actionable():
     assert "Attach the compact issue packet" in workflow
     assert "Redaction review" in workflow
     assert "Product gate" in workflow
+
+
+def test_pr_ci_failure_handoff_document_is_actionable():
+    workflow = Path("docs/pr-ci-failure-handoff.md").read_text(encoding="utf-8")
+
+    assert "create-failure-packet" in workflow
+    assert "PR/CI failure" in workflow
+    assert "redaction review" in workflow
+    assert "issue packet" in workflow
+    assert "does not read GitHub PRs automatically" in workflow
+    assert "do not paste raw logs" in workflow
