@@ -142,6 +142,7 @@ Real-user feedback should be classified as false-positive, false-negative, adapt
 ## Docs
 
 - [Product Foundation](./docs/product-foundation.md)
+- [Issue Handoff Workflow](./docs/issue-handoff-workflow.md)
 - [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
 - [Changelog](./CHANGELOG.md)
 - [Publishing](./docs/publishing.md)

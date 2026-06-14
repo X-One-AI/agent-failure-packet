@@ -44,3 +44,13 @@ def test_docs_and_package_metadata_stay_aligned():
     assert "recursive-include tests/fixtures *.md" in manifest
     assert "## 0.4.1" in changelog
     assert "GitHub Action" in changelog
+
+
+def test_issue_handoff_workflow_document_is_actionable():
+    workflow = Path("docs/issue-handoff-workflow.md").read_text(encoding="utf-8")
+
+    assert "10-minute issue handoff path" in workflow
+    assert "Validate the export before building" in workflow
+    assert "Attach the compact issue packet" in workflow
+    assert "Redaction review" in workflow
+    assert "Product gate" in workflow

@@ -142,6 +142,7 @@ Action 会写出 packet 文件，把紧凑 packet 追加到 `GITHUB_STEP_SUMMARY
 ## 文档
 
 - [产品基础](./docs/product-foundation.md)
+- [Issue Handoff Workflow](./docs/issue-handoff-workflow.md)
 - [Packet Builder Design](./docs/superpowers/specs/2026-06-13-packet-builder-design.md)
 - [Changelog](./CHANGELOG.md)
 - [Publishing](./docs/publishing.md)
