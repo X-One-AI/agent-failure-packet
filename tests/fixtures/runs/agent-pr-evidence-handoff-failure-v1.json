@@ -1,0 +1,53 @@
+{
+  "schema_version": "agent-failure-packet.run.v1",
+  "run": {
+    "id": "pr_evidence_run_101",
+    "started_at": "2026-06-14T03:00:00Z",
+    "ended_at": "2026-06-14T03:03:30Z",
+    "status": "failed",
+    "agent": "codex-cli"
+  },
+  "environment": {
+    "os": "ubuntu-latest",
+    "runtime": "python3.12",
+    "repo": "X-One-AI/example",
+    "branch": "feat/agent-pr-evidence-handoff",
+    "pull_request": "42"
+  },
+  "handoff": {
+    "source_tool": "agent-pr-evidence",
+    "decision": "create-failure-packet",
+    "evidence_source": "test-log",
+    "source_report": "agent-pr-evidence.md",
+    "reason": "PR evidence observed a failed test run and requested a redacted packet before review continues."
+  },
+  "events": [
+    {
+      "timestamp": "2026-06-14T03:00:15Z",
+      "kind": "message",
+      "message": "Reviewer requested a failure packet after PR evidence found failed tests."
+    },
+    {
+      "timestamp": "2026-06-14T03:01:10Z",
+      "kind": "tool_call",
+      "message": "Running pytest for the agent-generated change",
+      "tool_call": {
+        "name": "shell",
+        "arguments": {
+          "cmd": "pytest tests/test_agent_change.py",
+          "CI_TOKEN": "ghp_exampleSecretToken123"
+        },
+        "exit_code": 1
+      }
+    },
+    {
+      "timestamp": "2026-06-14T03:02:45Z",
+      "kind": "error",
+      "message": "pytest failed in the generated branch",
+      "error": {
+        "type": "TestFailure",
+        "message": "1 failed, token=packet-secret-value"
+      }
+    }
+  ]
+}

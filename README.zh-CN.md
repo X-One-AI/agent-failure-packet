@@ -6,7 +6,7 @@
 
 ## 状态
 
-`P1` - v0.4.1 本地 packet builder 和 read-only GitHub Action。
+`P1` - v0.4.2 本地 packet builder 和 read-only GitHub Action。
 
 ## 目的
 
@@ -57,6 +57,8 @@ agent-failure-packet build --input failed-run.json --redaction-policy .agent-fai
 
 输入文件使用 `schema_version: agent-failure-packet.run.v1`。JSON 输出使用 `schema_version: agent-failure-packet.packet.v1`。
 
+当 `agent-pr-evidence` 报告要求 `create-failure-packet` 时，run export 可以包含可选的 `handoff` 上下文。packet 会在脱敏后保留这部分信息，并在 Markdown 中渲染为 `Handoff Context`，方便 issue、support 或 incident review 读者追溯为什么创建这个 packet。
+
 `agent-failure-packet build` 会从当前目录或上级目录自动发现 `.agent-failure-packet.yml`：
 
 ```yaml
@@ -75,6 +77,7 @@ Fixture corpus：
 - `generic-failure-v1.json`
 - `codex-cli-failure-v1.json`
 - `github-copilot-agent-failure-v1.json`
+- `agent-pr-evidence-handoff-failure-v1.json`
 
 自定义脱敏策略示例：
 
@@ -105,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: X-One-AI/agent-failure-packet@v0.4.1
+      - uses: X-One-AI/agent-failure-packet@v0.4.2
         with:
           input: failed-run.json
           profile: issue

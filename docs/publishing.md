@@ -43,7 +43,7 @@ Environment: testpypi or pypi
 ## Publish Order
 
 1. Merge and verify a green CI run on `main`.
-2. Confirm the release tag exists, for example `v0.4.1`.
+2. Confirm the release tag exists, for example `v0.4.2`.
 3. Run `Publish Python Package` with `repository = testpypi`.
 4. Verify a clean TestPyPI install.
 5. Run `Publish Python Package` with `repository = pypi` from a release tag after approval.
@@ -71,6 +71,6 @@ python -m venv /tmp/agent-failure-packet-pypi
 ## GitHub Release Install Path
 
 ```bash
-python3 -m pip install https://github.com/X-One-AI/agent-failure-packet/releases/download/v0.4.1/xone_agent_failure_packet-0.4.1-py3-none-any.whl
+python3 -m pip install https://github.com/X-One-AI/agent-failure-packet/releases/download/v0.4.2/xone_agent_failure_packet-0.4.2-py3-none-any.whl
 agent-failure-packet --version
 ```
